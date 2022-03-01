@@ -1,0 +1,82 @@
+.logo {
+  margin-left: 10px;
+  max-height: 50px;
+  max-width: 50px;
+  height: auto;
+  width: auto;
+}
+
+.navbar {
+  background: linear-gradient(0deg, #6d3777 -30%, #240B36 180%);
+}
+
+.main {
+  background: linear-gradient(180deg, #6d3777 25%, #240B36 75%);
+  position:absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.container {  
+  filter: drop-shadow(0 0 0.75rem white);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.title {
+  font-weight: bold;
+  size: 64px;
+}
+
+.form {
+  justify-content: center;
+}
+
+.input-group {
+  margin-left: 30%;
+  width: 40%;
+}
+
+input[type="file"] {
+  justify-content: center;
+  margin: 10px;
+}
+
+input[type="file"]:focus {
+  filter: drop-shadow(0 0 0.5rem #6d3777);
+  border-color: #6d3777;
+  box-shadow: none;
+}
+
+.btn-group {
+  margin: 10px;
+  gap: 10px;
+}
+
+.btn-outline-purple {
+  border-color: #6d3777;
+  color: #6d3777;
+}
+
+.btn-outline-purple:hover {
+  background-color: #6d3777;
+  border-color: #6d3777;
+  color: white;
+}
+
+.btn-outline-purple:focus {
+  filter: drop-shadow(0 0 0.5rem #6d3777);
+  background-color: #6d3777;
+  border-color: #6d3777;
+  box-shadow: none;
+  color: white;
+}
+
+.btn-outline-dark:focus {
+  filter: drop-shadow(0 0 0.5rem black);
+  background-color: black;
+  box-shadow: none;
+  color: white;
+}
