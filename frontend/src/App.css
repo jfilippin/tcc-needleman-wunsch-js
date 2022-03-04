@@ -7,19 +7,19 @@
 }
 
 .navbar {
-  background: linear-gradient(0deg, #6d3777 -30%, #240B36 180%);
+  background: linear-gradient(0deg, #6432a8 -30%, #240B36 180%);
 }
-
+/* //AZUL E PRETO // REDUZIR A COR (DEIXAR MAIS ESCURO) */
 .main {
-  background: linear-gradient(180deg, #6d3777 25%, #240B36 75%);
+  background: linear-gradient(180deg, #6432a8 25%, #4c32a8 75%);
   position:absolute;
   height: 100%;
   width: 100%;
 }
 
 .container {  
-  filter: drop-shadow(0 0 0.75rem white);
-  background: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 0 0.2rem white);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 30px;
   text-align: center;
   margin-top: 2rem;
