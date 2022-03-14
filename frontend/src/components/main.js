@@ -10,11 +10,34 @@ class Main extends React.Component {
             seq2: ''
         }
 
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(e) {
+    handleChange(e) {
+        this.setState({
+            [e.target.id]: e.target.files
+        })
+    }
 
+    handleSubmit(e) {
+        e.preventDefault();
+
+        console.log(this.state);
+
+        const options = {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        }
+
+        fetch("http://localhost:5000", options)
+        .then((res) => {
+            console.log(JSON.stringify(res));
+           return res.json();
+        })
     }
 
     render () {
@@ -24,7 +47,7 @@ class Main extends React.Component {
                     <img src={logo} alt="Logo" className="logo"/>
                 </div>
         
-                <div className="main">
+                <div className="bg">
                     <div className="container">
                         <h1 className="title"><strong>Bem vindo ao (nome app)</strong></h1><hr/>
             
@@ -33,17 +56,17 @@ class Main extends React.Component {
                             de DNA em cada campo e clique em alinhar sequências.
                         </p>
             
-                        <form method="POST" className="form">
+                        <form method="POST" className="form" onSubmit={this.handleSubmit}>
                             <div className="input-group">
-                                <input type="file" className="form-control" id="seq1"/>
+                                <input type="file" className="form-control" id="seq1" onChange={this.handleChange}/>
                             </div>
                 
                             <div className="input-group">
-                                <input type="file" className="form-control" id="seq2"/>
+                                <input type="file" className="form-control" id="seq2" onChange={this.handleChange}/>
                             </div>
                 
                             <div className="btn-group" role="group">
-                                <button type="button" className="btn btn-outline-purple">Alinhar sequências</button>
+                                <button type="submit" className="btn btn-outline-purple">Alinhar sequências</button>
                                 <button type="reset" className="btn btn-outline-dark">Cancelar alinhamento</button>
                             </div>
                         </form>

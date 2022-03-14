@@ -10,7 +10,7 @@
   background: linear-gradient(0deg, #6432a8 -30%, #240B36 180%);
 }
 /* //AZUL E PRETO // REDUZIR A COR (DEIXAR MAIS ESCURO) */
-.main {
+.bg {
   background: linear-gradient(180deg, #6432a8 25%, #4c32a8 75%);
   position:absolute;
   height: 100%;
