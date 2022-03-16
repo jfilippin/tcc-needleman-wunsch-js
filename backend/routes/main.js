@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 router.post('/', (req, res) => {
-    console.log(req.body);
-    console.log(res.send("ok"));
+    console.log("Cheguei aqui: " + JSON.stringify(req.body.data));
 
+    res.status("200");
     return res.send("ok");
 });
 

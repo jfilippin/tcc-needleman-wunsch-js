@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import logo from '../img/logo.svg';
 
 class Main extends React.Component {
@@ -16,28 +17,31 @@ class Main extends React.Component {
 
     handleChange(e) {
         this.setState({
-            [e.target.id]: e.target.files
+            [e.target.id]: e.target.files[0]
         })
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
-        console.log(this.state);
-
         const options = {
-            method: 'post',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state)
-        }
+            data: this.state
+        };
 
-        fetch("http://localhost:5000", options)
+        console.log(options);
+
+        axios.post("http://localhost:5000", options)
         .then((res) => {
-            console.log(JSON.stringify(res));
-           return res.json();
+            console.log(res);
+            return res;
         })
+        .catch(err => {
+            console.log(err)
+        });
     }
 
     render () {
@@ -58,11 +62,11 @@ class Main extends React.Component {
             
                         <form method="POST" className="form" onSubmit={this.handleSubmit}>
                             <div className="input-group">
-                                <input type="file" className="form-control" id="seq1" onChange={this.handleChange}/>
+                                <input type="file" className="form-control" id="seq1" accept=".txt" onChange={this.handleChange}/>
                             </div>
                 
                             <div className="input-group">
-                                <input type="file" className="form-control" id="seq2" onChange={this.handleChange}/>
+                                <input type="file" className="form-control" id="seq2" accept=".txt" onChange={this.handleChange}/>
                             </div>
                 
                             <div className="btn-group" role="group">
