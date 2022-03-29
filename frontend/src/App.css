@@ -7,11 +7,12 @@
 }
 
 .navbar {
-  background: linear-gradient(0deg, #6432a8 -30%, #240B36 180%);
+  filter: drop-shadow(0 0 0.2rem black);
+  background: #FFFFFF;
 }
-/* //AZUL E PRETO // REDUZIR A COR (DEIXAR MAIS ESCURO) */
+
 .bg {
-  background: linear-gradient(180deg, #6432a8 25%, #4c32a8 75%);
+  background: linear-gradient(180deg, #1488CC 25%, #2B32B2 75%);
   position:absolute;
   height: 100%;
   width: 100%;
@@ -19,7 +20,7 @@
 
 .container {  
   filter: drop-shadow(0 0 0.2rem white);
-  background: rgba(255, 255, 255, 0.7);
+  background: white;
   border-radius: 30px;
   text-align: center;
   margin-top: 2rem;
@@ -30,23 +31,30 @@
   size: 64px;
 }
 
+/* VERIFICAR COMO BOTAR DEGRADÊ EM TEXTO */
+.appName {
+  background: -webkit-linear-gradient(#1488CC, #2B32B2);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
 .form {
   justify-content: center;
 }
 
-.input-group {
+.form-floating {
   margin-left: 30%;
   width: 40%;
 }
 
-input[type="file"] {
+input[type="text"] {
   justify-content: center;
   margin: 10px;
 }
 
-input[type="file"]:focus {
-  filter: drop-shadow(0 0 0.5rem #6d3777);
-  border-color: #6d3777;
+input[type="text"]:focus {
+  filter: drop-shadow(0 0 0.5rem #1488CC);
+  border-color: #2B32B2;
   box-shadow: none;
 }
 
@@ -55,21 +63,8 @@ input[type="file"]:focus {
   gap: 10px;
 }
 
-.btn-outline-purple {
-  border-color: #6d3777;
-  color: #6d3777;
-}
-
-.btn-outline-purple:hover {
-  background-color: #6d3777;
-  border-color: #6d3777;
-  color: white;
-}
-
-.btn-outline-purple:focus {
-  filter: drop-shadow(0 0 0.5rem #6d3777);
-  background-color: #6d3777;
-  border-color: #6d3777;
+.btn-primary:focus {
+  filter: drop-shadow(0 0 0.5rem #1488CC);
   box-shadow: none;
   color: white;
 }

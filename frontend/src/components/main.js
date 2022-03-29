@@ -17,7 +17,7 @@ class Main extends React.Component {
 
     handleChange(e) {
         this.setState({
-            [e.target.id]: e.target.files[0]
+            [e.target.id]: e.target.value.toUpperCase()
         })
     }
 
@@ -47,13 +47,16 @@ class Main extends React.Component {
     render () {
         return(
             <div className="App">
-                <div className="navbar bg-primary">
+                <div className="navbar">
                     <img src={logo} alt="Logo" className="logo"/>
                 </div>
         
                 <div className="bg">
                     <div className="container">
-                        <h1 className="title"><strong>Bem vindo ao (nome app)</strong></h1><hr/>
+                        <h1 className="title">
+                            <strong>Bem vindo ao </strong>
+                            <strong className="appName">(nome app)</strong>
+                        </h1><hr/>
             
                         <p className="startTxt">
                             Para começar, insira um arquivo contendo uma sequência <br/> 
@@ -61,16 +64,18 @@ class Main extends React.Component {
                         </p>
             
                         <form method="POST" className="form" onSubmit={this.handleSubmit}>
-                            <div className="input-group">
-                                <input type="file" className="form-control" id="seq1" accept=".txt" onChange={this.handleChange}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" onChange={this.handleChange}/>
+                                <label>Sequência nº 1</label>
                             </div>
                 
-                            <div className="input-group">
-                                <input type="file" className="form-control" id="seq2" accept=".txt" onChange={this.handleChange}/>
+                            <div className="form-floating">
+                                <input type="text" className="form-control" id="seq2" placeholder="TAGCAGT"  onChange={this.handleChange}/>
+                                <label>Sequência nº 2</label>
                             </div>
                 
                             <div className="btn-group" role="group">
-                                <button type="submit" className="btn btn-outline-purple">Alinhar sequências</button>
+                                <button type="submit" className="btn btn-primary">Alinhar sequências</button>
                                 <button type="reset" className="btn btn-outline-dark">Cancelar alinhamento</button>
                             </div>
                         </form>
