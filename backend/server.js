@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const globalAlignment = require('./routes/global-alignment');
+const mainRouter = require('./routes/main');
 
 require('dotenv').config();
 
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/', globalAlignment);
+app.use('/', mainRouter);
 
 const port = process.env.PORT;
 
