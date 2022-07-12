@@ -1,27 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import $ from 'jquery';
 import logo from '../img/logo.svg';
+import {
+    Navbar, 
+    Image, 
+    Container, 
+    Form, 
+    FloatingLabel, 
+    Button, 
+    ButtonGroup, 
+    Modal,
+    Table
+} from 'react-bootstrap';
 
-class Main extends React.Component {
-    constructor(props) {
-        super(props);
+function Main() {
+    const [seq1, setSeq1] = useState("");
+    const [seq2, setSeq2] = useState("");
+    const [show, setShow] = useState(false);
 
-        this.state = {
-            seq1: '',
-            seq2: ''
-        }
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(e) {
-        this.setState({
-            [e.target.id]: e.target.value.toUpperCase()
-        })
-    }
-
-    handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const options = {
@@ -29,59 +30,89 @@ class Main extends React.Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: this.state
+            data: {
+                seq1, seq2
+            }
         };
-
-        console.log(options);
 
         axios.post("http://localhost:5000", options)
         .then((res) => {
-            console.log(res);
             return res;
+        })
+        .then((res) => {
+            console.log(res.data);
+
+            for(var i = 0; i < res.data[0].length; i++) {
+                $("#alignTable").find("#seq1").append(`
+                    <td>${res.data[0][i]}</td>
+                `); 
+
+                $("#alignTable").find("#seq2").append(`
+                    <td>${res.data[1][i]}</td>
+                `);
+            }
         })
         .catch(err => {
             console.log(err)
         });
     }
 
-    render () {
-        return(
-            <div className="App">
-                <div className="navbar">
-                    <img src={logo} alt="Logo" className="logo"/>
-                </div>
+    return(
+        <div className="App">
+            <Navbar>
+                <Image src={logo} alt="Logo" className="logo"/>
+            </Navbar>
         
-                <div className="bg">
-                    <div className="container">
-                        <h1 className="title">
-                            <strong>Bem vindo ao </strong>
-                            <strong className="appName">(nome app)</strong>
-                        </h1><hr/>
+            <div className="bg">
+                <Container>
+                    <h1 className="title">
+                        <strong>Bem vindo ao </strong>
+                        <strong className="appName">(nome app)</strong>
+                    </h1><hr/>
             
-                        <p className="startTxt">
-                            Para começar, insira um arquivo contendo uma sequência <br/> 
-                            de DNA em cada campo e clique em alinhar sequências.
-                        </p>
+                    <p className="startTxt">
+                        Para começar, insira um arquivo contendo uma sequência <br/> 
+                        de DNA em cada campo e clique em alinhar sequências.
+                    </p>
             
-                        <form method="POST" className="form" onSubmit={this.handleSubmit}>
-                            <div className="form-floating">
-                                <input type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" onChange={this.handleChange}/>
-                                <label>Sequência nº 1</label>
-                            </div>
+                    <Form method="POST" className="form" onSubmit={handleSubmit}>
+                        <FloatingLabel label="Sequência nº 1">
+                            <Form.Control type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" onChange={(e) => setSeq1(e.target.value)}/>
+                        </FloatingLabel>
                 
-                            <div className="form-floating">
-                                <input type="text" className="form-control" id="seq2" placeholder="TAGCAGT"  onChange={this.handleChange}/>
-                                <label>Sequência nº 2</label>
-                            </div>
-                
-                            <div className="btn-group" role="group">
-                                <button type="submit" className="btn btn-primary">Alinhar sequências</button>
-                                <button type="reset" className="btn btn-outline-dark">Cancelar alinhamento</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                        <FloatingLabel label="Sequência nº 2">
+                            <Form.Control type="text" className="form-control" id="seq2" placeholder="TAGCAGT"  onChange={(e) => setSeq2(e.target.value)}/>
+                        </FloatingLabel>
+
+                        <ButtonGroup>
+                            <Button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#results" onClick={handleShow}>Alinhar sequências</Button>
+                            <Button type="reset" className="btn btn-outline-dark">Cancelar alinhamento</Button>
+                        </ButtonGroup>
+                    </Form>
+                </Container>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header>
+                        <Modal.Title>Resultados do alinhamento</Modal.Title>
+                        <Button type="button" className="btn close btn-outline-light" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
+                            <span aria-hidden="true">&times;</span>
+                        </Button>   
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <Table responsive id="alignTable">
+                            <tbody>
+                                <tr id="seq1"></tr>
+                                <tr id="seq2"></tr>
+                            </tbody>
+                        </Table>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button type="button" className="btn btn-secondary" onClick={handleClose}>Fechar</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
-        );
-    }
+        </div>
+    )
 } export default Main;

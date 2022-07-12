@@ -31,7 +31,6 @@
   size: 64px;
 }
 
-/* VERIFICAR COMO BOTAR DEGRADÊ EM TEXTO */
 .appName {
   background: -webkit-linear-gradient(#1488CC, #2B32B2);
   -webkit-text-fill-color: transparent;
@@ -53,7 +52,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-  filter: drop-shadow(0 0 0.5rem #1488CC);
+  filter: drop-shadow(0 0 0.1rem #1488CC);
   border-color: #2B32B2;
   box-shadow: none;
 }
@@ -64,14 +63,25 @@ input[type="text"]:focus {
 }
 
 .btn-primary:focus {
-  filter: drop-shadow(0 0 0.5rem #1488CC);
+  filter: drop-shadow(0 0 0.2rem #1488CC);
   box-shadow: none;
   color: white;
 }
 
+.btn-outline-dark {
+  background-color: white;
+  color: black;
+}
+
 .btn-outline-dark:focus {
-  filter: drop-shadow(0 0 0.5rem black);
+  filter: drop-shadow(0 0 0.1rem black);
   background-color: black;
   box-shadow: none;
   color: white;
+}
+
+.close {
+  background-color: white;
+  color: gray;
+  border-color: none;
 }

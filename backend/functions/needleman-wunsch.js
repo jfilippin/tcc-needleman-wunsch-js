@@ -42,11 +42,14 @@ function NeedlemanWunsch (seq1, seq2) {
             alignMatrix[i][j] = newValue;
         }
     }
-    
+
+    console.log(directionMatrix);
+
     //Exibindo as sequências alinhadas
     var basePairs = [[], []];
     var i = seq1.length;
     var j = seq2.length;
+    // var numMatches, numMismatches, numGaps;
     while (i > 0 || j > 0) {
         if(directionMatrix[i][j][0] == UP) {
             i--;
@@ -64,5 +67,14 @@ function NeedlemanWunsch (seq1, seq2) {
         }
     }
 
-    return basePairs;
+    basePairs[0] = basePairs[0].reverse();
+    basePairs[1] = basePairs[1].reverse();
+
+    var alignmentResults = {
+        basePairs,
+        alignMatrix,
+        directionMatrix
+    }
+
+    return alignmentResults;
 } module.exports = NeedlemanWunsch;
