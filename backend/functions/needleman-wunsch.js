@@ -31,7 +31,7 @@ function NeedlemanWunsch (seq1, seq2) {
             ? -GAP * (i + j)
             : Math.max(alignMatrix[i-1][j] - GAP, alignMatrix[i-1][j-1] + alignMatrix[i][j], alignMatrix[i][j-1] - GAP);
 
-            //Definindo a direção do alinhamento
+            //Definindo a direção do alinhamento II adicionar umm else 
             if (i > 0 && j > 0) {
                 if (newValue == alignMatrix[i-1][j] - GAP) directionMatrix[i][j].push(UP);
                 if (newValue == alignMatrix[i][j-1] - GAP) directionMatrix[i][j].push(LEFT);
@@ -42,8 +42,6 @@ function NeedlemanWunsch (seq1, seq2) {
             alignMatrix[i][j] = newValue;
         }
     }
-
-    console.log(directionMatrix);
 
     //Exibindo as sequências alinhadas
     var basePairs = [[], []];
@@ -70,11 +68,11 @@ function NeedlemanWunsch (seq1, seq2) {
     basePairs[0] = basePairs[0].reverse();
     basePairs[1] = basePairs[1].reverse();
 
-    var alignmentResults = {
-        basePairs,
-        alignMatrix,
-        directionMatrix
-    }
+    // var alignmentResults = {
+    //     basePairs,
+    //     alignMatrix,
+    //     directionMatrix
+    // }
 
-    return alignmentResults;
+    return basePairs;
 } module.exports = NeedlemanWunsch;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import $ from 'jquery';
 import logo from '../img/logo.svg';
+import $ from 'jquery';
 import {
     Navbar, 
     Image, 
@@ -42,16 +42,28 @@ function Main() {
         .then((res) => {
             console.log(res.data);
 
-            for(var i = 0; i < res.data[0].length; i++) {
-                $("#alignTable").find("#seq1").append(`
-                    <td>${res.data[0][i]}</td>
-                `); 
+            //máximo de 29 caractéres por linha
+            //inicializar i e j como 0 fora do bloco for
+            //passar i e j como parametro normalmente, mas dessa vez, adicionar i += i no final da repetição do loop
+            //criar var para armazenar o tamanho das sequencias, será o controle do loop principal
 
-                $("#alignTable").find("#seq2").append(`
-                    <td>${res.data[1][i]}</td>
+            var i = 0;
+            var j = 0;
+            var k = 0;
+            for (k; k < res.data[0].length; k++) {}
+
+            for (i; i < res.data[0].length; i++) {
+                $("#alignmentResults").find("#seq1").append(`
+                <td>${res.data[0][i]}</td>
                 `);
             }
-        })
+            
+            for (j; j < res.data[1].length; j++) {
+                $("#alignmentResults").find("#seq2").append(`
+                    <td>${res.data[1][j]}</td>
+                    `)
+                }
+            })
         .catch(err => {
             console.log(err)
         });
@@ -91,19 +103,16 @@ function Main() {
                     </Form>
                 </Container>
 
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header>
-                        <Modal.Title>Resultados do alinhamento</Modal.Title>
-                        <Button type="button" className="btn close btn-outline-light" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
-                            <span aria-hidden="true">&times;</span>
-                        </Button>   
+                <Modal show={show} onHide={handleClose} backdrop="static" size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Resultados do alinhamento</Modal.Title>                    
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Table responsive id="alignTable">
-                            <tbody>
-                                <tr id="seq1"></tr>
-                                <tr id="seq2"></tr>
+                        <Table>
+                            <tbody id="alignmentResults">
+                                <tr id="seq1"/>
+                                <tr id="seq2"/>
                             </tbody>
                         </Table>
                     </Modal.Body>
