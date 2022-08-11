@@ -85,3 +85,15 @@ input[type="text"]:focus {
   color: gray;
   border-color: none;
 }
+
+#alignmentResults .match {
+  color: seagreen;
+}
+
+#alignmentResults .mismatch {
+  color: red;
+}
+
+#alignmentResults .gap {
+  color: black;
+}

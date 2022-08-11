@@ -42,28 +42,31 @@ function Main() {
         .then((res) => {
             console.log(res.data);
 
-            //máximo de 29 caractéres por linha
-            //inicializar i e j como 0 fora do bloco for
-            //passar i e j como parametro normalmente, mas dessa vez, adicionar i += i no final da repetição do loop
-            //criar var para armazenar o tamanho das sequencias, será o controle do loop principal
-
-            var i = 0;
-            var j = 0;
-            var k = 0;
-            for (k; k < res.data[0].length; k++) {}
-
-            for (i; i < res.data[0].length; i++) {
+            for (var i = 0; i < res.data[0].length; i++) {
                 $("#alignmentResults").find("#seq1").append(`
-                <td>${res.data[0][i]}</td>
+                    <td id=r1c${i}>${res.data[0][i]}</td>
                 `);
             }
-            
-            for (j; j < res.data[1].length; j++) {
+                
+            for (var j = 0; j < res.data[1].length; j++) {
                 $("#alignmentResults").find("#seq2").append(`
-                    <td>${res.data[1][j]}</td>
-                    `)
+                    <td id=r2c${j}>${res.data[1][j]}</td>
+                `)
+            }
+
+            for (var k = 0; k < res.data[0].length; k++) {
+                if(res.data[0][k] === res.data[1][k]) {
+                    $(`#r1c${k}`).addClass("match");
+                    $(`#r2c${k}`).addClass("match");
+                } else if (res.data[0][k] === "-" || res.data[1][k] === "-") {
+                    $(`#r1c${k}`).addClass("gap");
+                    $(`#r2c${k}`).addClass("gap");
+                } else {
+                    $(`#r1c${k}`).addClass("mismatch");
+                    $(`#r2c${k}`).addClass("mismatch");
                 }
-            })
+            }
+        })
         .catch(err => {
             console.log(err)
         });
@@ -79,21 +82,21 @@ function Main() {
                 <Container>
                     <h1 className="title">
                         <strong>Bem vindo ao </strong>
-                        <strong className="appName">(nome app)</strong>
+                        <strong className="appName">SeqAligner</strong>
                     </h1><hr/>
             
                     <p className="startTxt">
-                        Para começar, insira um arquivo contendo uma sequência <br/> 
-                        de DNA em cada campo e clique em alinhar sequências.
+                        Para começar, insira duas sequências de DNA quaisquer <br/> 
+                        em cada campo e clique em alinhar sequências.
                     </p>
             
                     <Form method="POST" className="form" onSubmit={handleSubmit}>
                         <FloatingLabel label="Sequência nº 1">
-                            <Form.Control type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" onChange={(e) => setSeq1(e.target.value)}/>
+                            <Form.Control type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" maxLength={25} onChange={(e) => setSeq1(e.target.value)}/>
                         </FloatingLabel>
                 
                         <FloatingLabel label="Sequência nº 2">
-                            <Form.Control type="text" className="form-control" id="seq2" placeholder="TAGCAGT"  onChange={(e) => setSeq2(e.target.value)}/>
+                            <Form.Control type="text" className="form-control" id="seq2" placeholder="TAGCAGT" maxLength={25} onChange={(e) => setSeq2(e.target.value)}/>
                         </FloatingLabel>
 
                         <ButtonGroup>
@@ -109,10 +112,15 @@ function Main() {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Table>
+                        <Table striped bordered responsive>
                             <tbody id="alignmentResults">
-                                <tr id="seq1"/>
-                                <tr id="seq2"/>
+                                <tr id="seq1">
+                                    <th>Sequência n° 1</th>
+                                </tr>
+
+                                <tr id="seq2">
+                                    <th>Sequência n° 2</th>
+                                </tr>
                             </tbody>
                         </Table>
                     </Modal.Body>
