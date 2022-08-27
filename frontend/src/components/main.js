@@ -40,32 +40,78 @@ function Main() {
             return res;
         })
         .then((res) => {
-            console.log(res.data);
+            var i = 0;
+            var k;
+            var control = 0;
+            var position = 0;
+            // var numMatches = 0;
+            // var numMismatches = 0;
+            // var numGaps = 0;
 
-            for (var i = 0; i < res.data[0].length; i++) {
-                $("#alignmentResults").find("#seq1").append(`
-                    <td id=r1c${i}>${res.data[0][i]}</td>
+            while(control < res.data[0].length) {
+                $("#alignmentResults").append(`
+                    <tr id=r${i}>
+                        <th>Sequência n° 1</th>
+                    </tr>
+               `);
+
+                $("#alignmentResults").append(`
+                    <tr id=r${i+1}>
+                        <th>Sequência n° 2</th>
+                    </tr>
                 `);
-            }
                 
-            for (var j = 0; j < res.data[1].length; j++) {
-                $("#alignmentResults").find("#seq2").append(`
-                    <td id=r2c${j}>${res.data[1][j]}</td>
-                `)
+                $("#alignmentResults").append(`
+                    <br/>
+                `);
+
+                k = 0;
+                for(k; k < 24; k++) {
+                    if(res.data[0][position] == null){
+                        break
+                    }
+                    
+                    if(res.data[0][position] === res.data[1][position]) {
+                        $("#alignmentResults").find(`#r${i}`).append(`
+                            <td id=c${k} class=match>${res.data[0][position]}</td>
+                        `);
+
+                        $("#alignmentResults").find(`#r${i+1}`).append(`
+                            <td id=c${k} class=match>${res.data[1][position]}</td>
+                        `);
+
+                        // numMatches++
+                    } else if(res.data[0][position] === "-" || res.data[1][position] === "-") {
+                        $("#alignmentResults").find(`#r${i}`).append(`
+                            <td id=c${k}>${res.data[0][position]}</td>
+                        `);
+
+                        $("#alignmentResults").find(`#r${i+1}`).append(`
+                            <td id=c${k}>${res.data[1][position]}</td>
+                        `);
+                        
+                        // numGaps++;
+                    } else {
+                        $("#alignmentResults").find(`#r${i}`).append(`
+                            <td id=c${k} class=mismatch >${res.data[0][position]}</td>
+                        `);
+                            
+                        $("#alignmentResults").find(`#r${i+1}`).append(`
+                            <td id=c${k} class=mismatch >${res.data[1][position]}</td>
+                        `);
+                        // numMismatches++;
+                    }
+                    position++;
+                }
+                control += k;
+                i += 2;
             }
 
-            for (var k = 0; k < res.data[0].length; k++) {
-                if(res.data[0][k] === res.data[1][k]) {
-                    $(`#r1c${k}`).addClass("match");
-                    $(`#r2c${k}`).addClass("match");
-                } else if (res.data[0][k] === "-" || res.data[1][k] === "-") {
-                    $(`#r1c${k}`).addClass("gap");
-                    $(`#r2c${k}`).addClass("gap");
-                } else {
-                    $(`#r1c${k}`).addClass("mismatch");
-                    $(`#r2c${k}`).addClass("mismatch");
-                }
-            }
+            // $("able").insertBefore(`
+            //     <p class=match >${numMatches}</p>
+            //     <p class=mismatch >${numMismatches}</p>
+            //     <p>${numGaps}</p>
+            // `);
         })
         .catch(err => {
             console.log(err)
@@ -92,11 +138,11 @@ function Main() {
             
                     <Form method="POST" className="form" onSubmit={handleSubmit}>
                         <FloatingLabel label="Sequência nº 1">
-                            <Form.Control type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" maxLength={25} onChange={(e) => setSeq1(e.target.value)}/>
+                            <Form.Control type="text" className="form-control" id="seq1" placeholder="ATCGCTAG" onChange={(e) => setSeq1(e.target.value)}/>
                         </FloatingLabel>
                 
                         <FloatingLabel label="Sequência nº 2">
-                            <Form.Control type="text" className="form-control" id="seq2" placeholder="TAGCAGT" maxLength={25} onChange={(e) => setSeq2(e.target.value)}/>
+                            <Form.Control type="text" className="form-control" id="seq2" placeholder="TAGCAGT" onChange={(e) => setSeq2(e.target.value)}/>
                         </FloatingLabel>
 
                         <ButtonGroup>
@@ -113,15 +159,7 @@ function Main() {
 
                     <Modal.Body>
                         <Table striped bordered responsive>
-                            <tbody id="alignmentResults">
-                                <tr id="seq1">
-                                    <th>Sequência n° 1</th>
-                                </tr>
-
-                                <tr id="seq2">
-                                    <th>Sequência n° 2</th>
-                                </tr>
-                            </tbody>
+                            <tbody id="alignmentResults"/>
                         </Table>
                     </Modal.Body>
 
