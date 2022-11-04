@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
         A mesma célula da matriz tá com dois valores atribuídos a ela;
     */
     var results = NW(seq1, seq2);
-    return res.send(200, results);
+    return res.status(200).send(results);
 });
 
 module.exports = router;

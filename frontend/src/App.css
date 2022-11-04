@@ -86,6 +86,22 @@ input[type="text"]:focus {
   border-color: none;
 }
 
+#points .totalMatches {
+  padding-left: 10px;
+  color: white;
+  background-color: seagreen;
+}
+
+#points .totalMisMatches {
+  color: white;
+  background-color: red;
+}
+
+#points .totalGaps {
+  color: white;
+  background-color: gray;
+}
+
 #alignmentResults .match {
   color: seagreen;
 }

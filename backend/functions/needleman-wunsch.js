@@ -11,19 +11,36 @@ function NeedlemanWunsch (seq1, seq2) {
     //alignMatrix guarda a pontuação, directionMatrix guarda a direção
     var alignMatrix = {};
     var directionMatrix = {};
+
+    var numMatches = 0;
+    var numMisMatches = 0;
+    var numGaps = 0;
     
+    console.log("************************")
     //Inicializando as matrizes
+    console.time("Inicialização da matriz");
     for(var i = 0; i < seq1.length+1; i++) {
         alignMatrix[i] = {0:0};
         directionMatrix[i] = {0:[]};
 
         for(var j = 1; j < seq2.length+1; j++) {
-            alignMatrix[i][j] = (i == 0) ? 0 : (seq1.charAt(i-1) == seq2.charAt(j-1)) ? MATCH : MISMATCH 
+            if(alignMatrix[i][j] = (i == 0)) {
+                0;
+            } else {
+                if ((seq1.charAt(i-1) == seq2.charAt(j-1))) {
+                    MATCH
+                } else {
+                    MISMATCH
+                }
+            }
+            // alignMatrix[i][j] = (i == 0) ? 0 : (seq1.charAt(i-1) == seq2.charAt(j-1)) ? MATCH : MISMATCH 
             directionMatrix[i][j] = [];
         }
     }
+    console.timeEnd("Inicialização da matriz");
     
     //Calculando o alinhamento das sequências
+    console.time("Cálculo do alinhamento");
     for(var i = 0; i < seq1.length+1; i++) {
         for(var j = 0; j < seq2.length+1; j++) {
             // Se usar if else normal, o resto do algoritmo quebra
@@ -42,12 +59,13 @@ function NeedlemanWunsch (seq1, seq2) {
             alignMatrix[i][j] = newValue;
         }
     }
-
+    console.timeEnd("Cálculo do alinhamento");
+    console.log("************************")
     //Exibindo as sequências alinhadas
     var basePairs = [[], []];
     var i = seq1.length;
     var j = seq2.length;
-    // var numMatches, numMismatches, numGaps;
+
     while (i > 0 || j > 0) {
         if(directionMatrix[i][j][0] == UP) {
             i--;

@@ -19,6 +19,10 @@ function Main() {
     const [seq2, setSeq2] = useState("");
     const [show, setShow] = useState(false);
 
+    var numMatches = 0;
+    var numMisMatches = 0;
+    var numGaps = 0;
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -44,9 +48,6 @@ function Main() {
             var k;
             var control = 0;
             var position = 0;
-            // var numMatches = 0;
-            // var numMismatches = 0;
-            // var numGaps = 0;
 
             while(control < res.data[0].length) {
                 $("#alignmentResults").append(`
@@ -75,12 +76,12 @@ function Main() {
                         $("#alignmentResults").find(`#r${i}`).append(`
                             <td id=c${k} class=match>${res.data[0][position]}</td>
                         `);
-
+                        
                         $("#alignmentResults").find(`#r${i+1}`).append(`
                             <td id=c${k} class=match>${res.data[1][position]}</td>
                         `);
 
-                        // numMatches++
+                        numMatches++;
                     } else if(res.data[0][position] === "-" || res.data[1][position] === "-") {
                         $("#alignmentResults").find(`#r${i}`).append(`
                             <td id=c${k}>${res.data[0][position]}</td>
@@ -89,8 +90,8 @@ function Main() {
                         $("#alignmentResults").find(`#r${i+1}`).append(`
                             <td id=c${k}>${res.data[1][position]}</td>
                         `);
-                        
-                        // numGaps++;
+
+                        numGaps++;
                     } else {
                         $("#alignmentResults").find(`#r${i}`).append(`
                             <td id=c${k} class=mismatch >${res.data[0][position]}</td>
@@ -99,19 +100,18 @@ function Main() {
                         $("#alignmentResults").find(`#r${i+1}`).append(`
                             <td id=c${k} class=mismatch >${res.data[1][position]}</td>
                         `);
-                        // numMismatches++;
+
+                        numMisMatches++;
                     }
                     position++;
                 }
                 control += k;
                 i += 2;
             }
+            $("#totalMatches").text(numMatches);
+            $("#totalMisMatches").text(numMisMatches);
+            $("#totalGaps").text(numGaps);
 
-            // $("able").insertBefore(`
-            //     <p class=match >${numMatches}</p>
-            //     <p class=mismatch >${numMismatches}</p>
-            //     <p>${numGaps}</p>
-            // `);
         })
         .catch(err => {
             console.log(err)
@@ -158,6 +158,21 @@ function Main() {
                     </Modal.Header>
 
                     <Modal.Body>
+                        <Table bordered>
+                            <tbody id="points">
+                                <tr>
+                                    <td className="totalMatches">Matches:</td>
+                                        <td id="totalMatches"/>
+                                    <td className="totalMisMatches">Mismatches:</td>
+                                        <td id="totalMisMatches"/>
+                                    <td className="totalGaps">Gaps:</td>
+                                        <td id="totalGaps"/>
+                                    <td>Pontuação total:</td>
+                                        <td/>
+                                </tr>
+                            </tbody>
+                        </Table>
+
                         <Table striped bordered responsive>
                             <tbody id="alignmentResults"/>
                         </Table>
